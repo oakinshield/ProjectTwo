@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Weather Alarm</title>
+
+		<!-- The main CSS file -->
+		<link href="assets/css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="assets/css/component.css" />
+
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+    <!--location-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="assets/js/modernizr.custom.js"></script>
+	</head>
+
+	<body>
+
+		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+			<h3>Menu</h3>
+			<a href="#">Preferences</a>
+			<a href="#" class="alarm-button">Alarm</a>
+			<a href="#">Customize</a>
+			<a href="http://instagram.com">Instagram</a>
+			<a href="http://facebook.com">Facebook</a>
+			<a href="http://twitter.com">Twitter</a>
+		</nav>
+
+		<div id="clock" class="light">
+			<div class="display">
+				<div class="weekdays"></div>
+				<div class="ampm"></div>
+				<div class="alarm"></div>
+				<div class="digits"></div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="main">
+				<section class="buttonset">
+					<button id="showLeftPush">Menu</button>
+				</section>
+			</div>
+		</div>
+
+          <div><span id="state" style="font-size:50px;"></span></div> 
+		<!-- The dialog is hidden with css -->
+		<div class="overlay">
+
+			<div id="alarm-dialog">
+
+				<h2>Set alarm after</h2>
+
+				<label class="hours">
+					Hours
+					<input type="number" value="0" min="0" />
+				</label>
+
+				<label class="minutes">
+					Minutes
+					<input type="number" value="0" min="0" />
+				</label>
+
+				<label class="seconds">
+					Seconds
+					<input type="number" value="0" min="0" />
+				</label>
+
+				<div class="button-holder">
+					<a id="alarm-set" class="button blue">Set</a>
+					<a id="alarm-clear" class="button red">Clear</a>
+				</div>
+
+				<a class="close"></a>
+
+			</div>
+
+		</div>
+
+		<div class="overlay">
+
+			<div id="time-is-up">
+
+				<h2>Time's up!</h2>
+
+				<div class="button-holder">
+					<a class="button blue">Close</a>
+				</div>
+
+			</div>
+
+		</div>
+<div class="container" style="margin-left:48.5%; margin-top:50px;">
+	<div style="float: center; width: 130px;">
+    <div style="display: block; clear: center;">
+      <div style="float: center;" title="Titel">
+        <img height="45" width="45" style="border: medium none; width: 45px; height: 45px; background: url(&quot;http://openweathermap.org/img/w/02n.png&quot;) repeat scroll 0% 0% transparent;" alt="title" src="http://openweathermap.org/images/transparent.png">
+      </div>
+      <div style="float: center;">
+        <div style="display: block; clear: center; font-size: medium; font-weight: bold; padding: 0pt 3pt;" title="Current Temperature">15.4°C</div>
+        <div style="display: block; width: 85px; overflow: visible;"></div>
+      </div>
+    </div>
+    <div style="display: block; clear: center; font-size: small;">Clouds: 24%</div>
+    <div style="display: block; clear: center; color: gray; font-size: x-small;">Wind: 6.76 m/s</div>
+    <div style="display: block; clear: center; color: gray; font-size: x-small;">Pressure: 1007.99hpa</div>
+  </div>
+  <div style="display: block; clear: center; color: gray; font-size: x-small;">
+    <a href="http://openweathermap.org/city/2179537" target="_blank">More..</a>
+  </div>
+  <script async="" src="//www.google-analytics.com/analytics.js"></script>
+ </div>
+
+		<audio id="alarm-ring" preload>
+			<source src="assets/audio/ticktac.mp3" type="audio/mpeg" />
+			<source src="assets/audio/ticktac.ogg" type="audio/ogg" />
+		</audio>
+
+		<!-- JavaScript Includes -->
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+		<script src="assets/js/script.js"></script>
+		<script src="assets/js/classie.js"></script>
+       <script>
+      $.getJSON('https://geoip-db.com/json/geoip.php?jsonp=?') 
+         .done (function(location)
+         {
+            $('#country').html(location.country_name);
+            $('#state').html(location.state);
+            $('#city').html(location.city);
+            $('#latitude').html(location.latitude);
+            $('#longitude').html(location.longitude);
+            $('#ip').html(location.IPv4);               
+         });
+    </script>
+
+    <script>
+			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+				showLeftPush = document.getElementById( 'showLeftPush' ),
+				body = document.body;
+
+			showLeftPush.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( body, 'cbp-spmenu-push-toright' );
+				classie.toggle( menuLeft, 'cbp-spmenu-open' );
+				disableOther( 'showLeftPush' );
+			};
+		
+			function disableOther( button ) {
+
+				if( button !== 'showLeftPush' ) {
+					classie.toggle( showLeftPush, 'disabled' );
+				}
+			}
+		</script>
+
+
+<!--weather-->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-31601618-9', 'auto');ga('send', 'pageview');
+</script>
+
+	</body>
+</html>
