@@ -251,3 +251,21 @@ $(function(){
 	});
 
 });
+
+$(document).on('click', '#soundStop', function(e) {
+    $(this).hide();
+    $(this).next("a").show();
+    $('audio').each(function(){
+        this.pause();
+        this.currentTime = 0;
+    });
+    e.preventDefault();
+});
+
+$(document).on('click', '#soundPlay', function(e) {
+    $(this).hide();
+    $(this).prev("a").show();
+    $(this).closest("audio").play();
+    //alert("play sound again!");
+    e.preventDefault();
+});
